@@ -1,6 +1,6 @@
 // With proper loader configuration you can load,
 // pre-process and insert css directly with require().
-// See webpack.config.js for details.  
+// See webpack.config.js for details.
 require('./main.styl')
 
 var Vue = require('vue')
@@ -16,7 +16,7 @@ var currentView = null
  * loaded. You can confirm this by inspecting the network
  * activity in devtools.
  */
-
+/*
 function route () {
   var view = window.location.hash.slice(1)
   if (view === 'a') {
@@ -30,6 +30,22 @@ function route () {
       loadView(require('./views/b'))
     })
   }
+}
+*/
+
+function route () {
+  var view = window.location.hash.slice(1)
+
+  try {
+    var load = require('bundle!./views/' + view + '/index.js')
+  } catch(err) {
+    // can't find view, ignored
+    return
+  }
+
+  load(function(file) {
+    loadView(file)
+  })
 }
 
 /**
