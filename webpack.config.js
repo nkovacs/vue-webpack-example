@@ -2,7 +2,7 @@ module.exports = {
   entry: "./src/main.js",
   output: {
     path: "./build",
-    publicPath: "/build/",
+    publicPath: "/vue-webpack-example/build/",
     filename: "build.js"
   },
   module: {

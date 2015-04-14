@@ -4,6 +4,7 @@
   "description": "Vue project example using Webpack as the bundler.",
   "main": "src/main.js",
   "dependencies": {
+    "page": "^1.6.2",
     "vue": "yyx990803/vue#next"
   },
   "devDependencies": {

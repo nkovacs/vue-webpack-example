@@ -4,6 +4,7 @@
 require('./main.styl')
 
 var Vue = require('vue')
+var page = require('page')
 var currentView = null
 
 /**
@@ -33,6 +34,7 @@ function route () {
 }
 */
 
+/*
 function route () {
   var view = window.location.hash.slice(1)
 
@@ -47,6 +49,7 @@ function route () {
     loadView(file)
   })
 }
+*/
 
 /**
  * Instantiate current view as a Vue instance.
@@ -63,5 +66,26 @@ function loadView (pageOptions) {
     .$appendTo(document.body)
 }
 
-window.addEventListener('hashchange', route)
-window.addEventListener('load', route)
+/*window.addEventListener('hashchange', route)
+window.addEventListener('load', route)*/
+
+function route(viewname) {
+  return function() {
+    try {
+      var load = require('bundle!./views/' + viewname + '/index.js')
+    } catch(err) {
+      // can't find view, ignored
+      return
+    }
+
+    load(function(file) {
+      loadView(file)
+    })
+  }
+}
+
+// CHANGE THIS
+page.base('/vue-webpack-example')
+page('/a', route('a'))
+page('/b', route('b'))
+page()
